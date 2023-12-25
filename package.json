@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "random": "nodemon index.ts"
+    "start.js": "nodemon index.js",
+    "start.ts": "nodemon index.ts"
   },
   "keywords": [],
   "author": "",
@@ -13,5 +14,8 @@
   "dependencies": {
     "nodemon": "^3.0.1",
     "nvm": "^0.0.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.5"
   }
 }
