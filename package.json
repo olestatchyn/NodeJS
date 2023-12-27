@@ -5,13 +5,16 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start.js": "nodemon index.js",
-    "start.ts": "nodemon index.ts"
+    "task1": "nodemon task1.ts",
+    "task2": "nodemon task2.ts",
+    "task3": "nodemon task3.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/csvtojson": "^2.0.0",
+    "csvtojson": "^2.0.10",
     "nodemon": "^3.0.1",
     "nvm": "^0.0.4"
   },
