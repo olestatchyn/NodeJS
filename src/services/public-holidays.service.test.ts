@@ -51,6 +51,14 @@ describe('public-holidays.service.ts module unit tests', () => {
 
       await expect(getListOfPublicHolidays(NOT_SUPPORTED_YEAR, SUPPORTED_COUNTRIES[0])).rejects.toThrow(expectedError);
     });
+
+    it('4', async () => {
+      jest.spyOn(axios, 'get').mockImplementation(() => Promise.resolve({ data: [] }));
+
+      const result = getListOfPublicHolidays(SUPPORTED_YEAR, SUPPORTED_COUNTRIES[0]);
+
+      await expect(result).resolves.toEqual([]);
+    });
   });
 
   describe('checkIfTodayIsPublicHoliday test', () => {
