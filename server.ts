@@ -1,15 +1,8 @@
-const net = require('net');
+import * as http from 'http';
+import requestListener from './src/routes/userRoute';
 
-const client = net.createConnection({ port: 3000 }, () => {
- console.log('Connected to server!');
- client.write('Hello, server!');
-});
-
-client.on('data', (data) => {
- console.log('Received data:', data.toString());
- client.end();
-});
-
-client.on('end', () => {
- console.log('Disconnected from server');
+const server = http.createServer(requestListener);
+const PORT = 3000;
+server.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });

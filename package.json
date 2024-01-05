@@ -15,9 +15,11 @@
     "@types/csvtojson": "^2.0.0",
     "axios": "^1.6.3",
     "csvtojson": "^2.0.10",
+    "lodash": "^4.17.21",
     "nodemon": "^3.0.1",
     "nvm": "^0.0.4",
-    "supertest": "^6.3.3"
+    "supertest": "^6.3.3",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/jest": "^29.5.11",
