@@ -1,8 +1,17 @@
-import * as http from 'http';
-import requestListener from './src/routes/userRoute';
+import express from 'express';
+import bodyParser from 'body-parser';
+import { productRouter } from './src/controllers/product.controller';
+import { cartRouter } from './src/controllers/cart.controller';
+import { logger } from './src/middlewares/logger';
+import { userIdValidation } from './src/middlewares/userIdValidation';
 
-const server = http.createServer(requestListener);
-const PORT = 3000;
-server.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+const app = express();
+const port = 5000;
+
+app.use(bodyParser.json());
+app.use(userIdValidation, logger);
+app.use('/api', productRouter, cartRouter);
+
+app.listen(port, () => {
+  console.log(`App listening on port: http://localhost:${port}/`);
 });
