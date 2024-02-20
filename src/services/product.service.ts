@@ -1,11 +1,11 @@
 import { getAllProducts, getProductById } from '../repositories/product.repository';
 
-function getProductList(){
-  return getAllProducts();
+async function getProductList(){
+  return await getAllProducts();
 }
 
-function getSingleProduct(productId:string){
-  return getProductById(productId);
+async function getSingleProduct(productId:string){
+  return await getProductById(productId);
 }
 
 export{ getProductList, getSingleProduct };

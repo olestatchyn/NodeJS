@@ -5,10 +5,10 @@ import { orderEntitySchema, cartPutEntitySchema } from '../validation/validation
 
 let cartRouter = express.Router();
 
-cartRouter.get('/profile/cart/:userId', (req: Request, res: Response) => {
+cartRouter.get('/profile/cart/:userId', async (req: Request, res: Response) => {
   try {
     const userId = req.params.userId;
-    const foundCart = getSingleCart(userId);
+    const foundCart = await getSingleCart(userId);
     res.status(200).json(foundCart);
   } catch (error) {
     console.log(error);
@@ -16,16 +16,17 @@ cartRouter.get('/profile/cart/:userId', (req: Request, res: Response) => {
   }
 });
 
-cartRouter.put('/profile/cart', (req: Request, res: Response) => {
+cartRouter.put('/profile/cart', async (req: Request, res: Response) => {
   try {
-    const bodyValidation = cartPutEntitySchema.validate(req.body);
+    const { error } = cartPutEntitySchema.validate(req.body);
 
-    if (bodyValidation.error) {
-      return res.status(500).send(bodyValidation.error.message);
+    if (error) {
+      return res.status(400).json({ error: error.message });
     }
+
     const cartItems = req.body;
     const cartId = req.header('id');
-    const editedCart = editCart(cartId, cartItems);
+    const editedCart = await editCart(cartId, cartItems);
     res.status(200).json(editedCart);
   } catch (error) {
     console.log(error);
@@ -33,10 +34,10 @@ cartRouter.put('/profile/cart', (req: Request, res: Response) => {
   }
 });
 
-cartRouter.delete('/profile/cart', (req: Request, res: Response) => {
+cartRouter.delete('/profile/cart', async (req: Request, res: Response) => {
   try {
     const userId = req.header('x-user-id');
-    deleteCart(userId);
+    await deleteCart(userId);
     res.status(204).send('Cart successfully deleted');
   } catch (error) {
     console.log(error);
@@ -44,7 +45,7 @@ cartRouter.delete('/profile/cart', (req: Request, res: Response) => {
   }
 });
 
-cartRouter.post('/profile/cart/checkout', (req: Request, res: Response) => {
+cartRouter.post('/profile/cart/checkout', async (req: Request, res: Response) => {
   try {
     const bodyValidation = orderEntitySchema.validate(req.body);
 
@@ -52,7 +53,7 @@ cartRouter.post('/profile/cart/checkout', (req: Request, res: Response) => {
       return res.status(500).send(bodyValidation.error.message);
     }
     const orderBody = req.body;
-    const createdOrder = createOrder(orderBody);
+    const createdOrder = await createOrder(orderBody);
 
     res.status(201).json(createdOrder);
   } catch (error) {

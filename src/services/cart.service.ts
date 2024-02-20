@@ -1,30 +1,27 @@
 import { getCartById, addNewCart, editCartById, deleteCartById } from '../repositories/cart.repository';
-import { CartEntity } from '../entities/cart.entity';
 import { v4 as uuidv4 } from 'uuid';
 
-function getSingleCart(userId){
-  const foundCart = getCartById(userId);
+async function getSingleCart(userId){
+  const foundCart = await getCartById(userId);
   if(!foundCart) {
-    const newCart: CartEntity = {
+    const newCart = {
       id: uuidv4(),
-      userId: userId,
-      isDeleted: false,
-      items: []
+      UserId: userId,
+      isDeleted: false
     };
-    addNewCart(newCart);
+    await addNewCart(newCart);
     return newCart;
   } else {
     return foundCart;
   }
 }
 
-function editCart(cartId, cartBody){
-  return editCartById(cartId, cartBody);
+async function editCart(cartId, cartBody){
+  return await editCartById(cartId, cartBody);
 }
 
-function deleteCart(userId){
-  deleteCartById(userId);
+async function deleteCart(userId){
+  await deleteCartById(userId);
 }
-
 
 export { getSingleCart, editCart, deleteCart };

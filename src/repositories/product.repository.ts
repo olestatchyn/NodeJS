@@ -1,11 +1,15 @@
-import { productsArray } from '../entities/product.entity';
+import { Product } from '../PostgreSQL/connecton';
 
-function getAllProducts() {
-  return productsArray;
+async function getAllProducts() {
+  return await Product.findAll();
 }
 
-function getProductById(productId: string) {
-  return productsArray.find(product => product.id === productId);
+async function getProductById(productId) {
+  return await Product.findOne({
+    where: {
+      id: productId
+    }
+  });
 }
 
 export { getAllProducts, getProductById };

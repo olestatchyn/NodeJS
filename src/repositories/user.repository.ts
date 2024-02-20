@@ -1,7 +1,11 @@
-import { usersArray } from '../entities/user.entity';
+import { User } from '../PostgreSQL/connecton';
 
-function getUserById(userId: string) {
-  return usersArray.find(user => user.id === userId);
+async function getUserById(userId) {
+  return await User.findOne({
+    where: {
+      id: userId
+    }
+  });
 }
 
-export { getUserById }
+export { getUserById };

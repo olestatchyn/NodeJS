@@ -3,9 +3,9 @@ import { getProductList, getSingleProduct } from '../services/product.service';
 
 let productRouter = express.Router();
 
-productRouter.get('/products', (req: Request, res: Response) => {
+productRouter.get('/products', async (req: Request, res: Response) => {
   try {
-    const productList = getProductList();
+    const productList = await getProductList();
     res.status(200).json(productList);
   } catch (error) {
     console.log(error);
@@ -13,10 +13,10 @@ productRouter.get('/products', (req: Request, res: Response) => {
   }
 });
 
-productRouter.get('/products/:productId', (req: Request, res: Response) => {
+productRouter.get('/products/:productId', async (req: Request, res: Response) => {
   try {
     const productId = req.params.productId;
-    const foundProduct = getSingleProduct(productId);
+    const foundProduct = await getSingleProduct(productId);
     if (!foundProduct) {
       res.status(404).json('Product not found');
     }

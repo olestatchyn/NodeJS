@@ -1,7 +1,7 @@
 import { createNewOrder } from '../repositories/order.repository';
 
-function createOrder(orderBody){
-  return createNewOrder(orderBody);
+async function createOrder(orderBody){
+  return await createNewOrder(orderBody);
 }
 
 export { createOrder }
