@@ -1,34 +1,96 @@
-version: '3.9'
+# version: '3.9'
 
+# services:
+#   mongodb:
+#     container_name: mongo_container
+#     image: mongo
+#     restart: always
+#     # ports:
+#     #   - "27017:27017"
+#     # environment:
+#     #   MONGO_INITDB_ROOT_USERNAME: node_gmp
+#     #   MONGO_INITDB_ROOT_PASSWORD: 123456
+#     volumes:
+#       - data:/var/lib/mongodb/data
+#   server:
+#     build: .
+#     ports:
+#       - 5000:5000
+#     environment:
+#       PORT: 5000
+#       DB_NAME: node_gmp
+#       NAME: Test_1
+#       MONGODB_URI: mongodb://mongodb:27017
+#     depends_on:
+#       - mongodb
+#   # mongodb-compass:
+#   #   image: mongo-express
+#   #   environment:
+#   #     ME_CONFIG_MONGODB_SERVER: mongodb
+#   #     ME_CONFIG_MONGODB_PORT: "27017"
+#   #     ME_CONFIG_MONGODB_ENABLE_ADMIN: "true"
+#   #   ports:
+#   #     - "8081:8081"
+#   #   networks:
+#   #     - mongodb_network
+#   # pgadmin:
+#   #   image: dpage/pgadmin4
+#   #   environment:
+#   #     PGADMIN_DEFAULT_EMAIL: 'your@email.com'
+#   #     PGADMIN_DEFAULT_PASSWORD: '123456'
+#   #   ports:
+#   #     - '5050:80'
+
+# volumes:
+#   data:
+
+
+
+# services:
+#   server:
+#     build: .
+#     ports:
+#       - 5000:5000
+#     environment:
+#       - DATABASE_HOST=mongodb
+#       - DATABASE_PORT=5000
+#       - DATABASE_USER=node_gmp
+#       - DATABASE_PASSWORD=123456
+#       - DATABASE_NAME=node_gmp
+#     depends_on:
+#       - mongodb
+#   mongodb:
+#     container_name: mongo_container
+#     image: mongo:lastest
+#     restart: always
+#     # ports:
+#     #   - "27017:27017"
+#     # environment:
+#     #   MONGO_INITDB_ROOT_USERNAME: node_gmp
+#     #   MONGO_INITDB_ROOT_PASSWORD: 123456
+#     volumes:
+#       - mongodb:/data/db
+
+
+version: '3.8'
 services:
-  server:
+  db:
+    image: mongo:latest
+    restart: always
+    # environment:
+    #   MONGO_INITDB_ROOT_USERNAME: node_gmp
+    #   MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - 27017:27017
+    volumes:
+      - data:/var/lib/mongodb/data
+  
+  app:
     build: .
-    environment:
-      - DATABASE_HOST=db
-      - DATABASE_PORT=5432
-      - DATABASE_USER=node_gmp
-      - DATABASE_PASSWORD=123456
-      - DATABASE_NAME=node_gmp
+    restart: always
     ports:
       - '5000:5000'
     depends_on:
       - db
-  db:
-    image: 'postgres'
-    restart: always
-    environment:
-      POSTGRES_PASSWORD: '123456'
-      POSTGRES_USER: 'node_gmp'
-      POSTGRES_DB: 'node_gmp'
-    volumes:
-      - data:/var/lib/postgresql/data
-  pgadmin:
-    image: dpage/pgadmin4
-    environment:
-      PGADMIN_DEFAULT_EMAIL: 'your@email.com'
-      PGADMIN_DEFAULT_PASSWORD: '123456'
-    ports:
-      - '5050:80'
-
 volumes:
   data:

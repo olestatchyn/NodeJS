@@ -1,9 +1,0 @@
-{
-  "development": {
-    "username": "node_gmp",
-    "password": "123456",
-    "database": "node_gmp",
-    "host": "db",
-    "dialect": "postgres"
-  }
-}
