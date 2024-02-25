@@ -1,20 +1,4 @@
-// import { Product } from '../MonogDB/connecton';
-
-// async function getAllProducts() {
-//   return await Product.findAll();
-// }
-
-// async function getProductById(productId) {
-//   return await Product.findOne({
-//     where: {
-//       id: productId
-//     }
-//   });
-// }
-
-// export { getAllProducts, getProductById };
-
-import { Product } from '../MonogoDB/connecton';
+import { Product } from '../schemas/relations';
 
 async function getAllProducts() {
   try {

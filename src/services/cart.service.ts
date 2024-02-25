@@ -1,13 +1,14 @@
 import { getCartById, addNewCart, editCartById, deleteCartById } from '../repositories/cart.repository';
-import { v4 as uuidv4 } from 'uuid';
+import mongoose from 'mongoose';
 
 async function getSingleCart(userId){
   const foundCart = await getCartById(userId);
   if(!foundCart) {
     const newCart = {
-      id: uuidv4(),
-      UserId: userId,
-      isDeleted: false
+      _id: new mongoose.Types.ObjectId(),
+      userId: userId,
+      isDeleted: false,
+      cartItems: [],
     };
     await addNewCart(newCart);
     return newCart;

@@ -1,9 +1,9 @@
-import Joi, { string } from 'joi';
+import Joi from 'joi';
 
 const orderEntitySchema = Joi.object({
   userId: Joi.string().required(),
   cartId: Joi.string().required(),
-  items: Joi.array().items(Joi.string()).required(),
+  cartItems: Joi.array().items(Joi.string()).required(),
   payment: Joi.object({
     method: Joi.string().required(),
     amount: Joi.number()
@@ -18,9 +18,9 @@ const orderEntitySchema = Joi.object({
 
 const cartPutEntitySchema = Joi.object({
   cartItems: Joi.array().items(Joi.object({
-    id: Joi.string().required(),
+    _id: Joi.string().required(),
     count: Joi.number().integer().min(0).required(),
-    ProductId: Joi.string().required(),
+    productId: Joi.string().required(),
   })).required(),
 });
 

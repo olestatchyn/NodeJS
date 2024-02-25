@@ -18,10 +18,10 @@ cartRouter.get('/profile/cart/:userId', async (req: Request, res: Response) => {
 
 cartRouter.put('/profile/cart', async (req: Request, res: Response) => {
   try {
-    const { error } = cartPutEntitySchema.validate(req.body);
+    const bodyValidation = cartPutEntitySchema.validate(req.body);
 
-    if (error) {
-      return res.status(400).json({ error: error.message });
+    if (bodyValidation.error) {
+      return res.status(400).send(bodyValidation.error.message);
     }
 
     const cartItems = req.body;
@@ -50,7 +50,7 @@ cartRouter.post('/profile/cart/checkout', async (req: Request, res: Response) =>
     const bodyValidation = orderEntitySchema.validate(req.body);
 
     if (bodyValidation.error) {
-      return res.status(500).send(bodyValidation.error.message);
+      return res.status(400).send(bodyValidation.error.message);
     }
     const orderBody = req.body;
     const createdOrder = await createOrder(orderBody);

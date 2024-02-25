@@ -1,43 +1,10 @@
-// import { CartItem, Order } from '../MonogDB/connecton';
-// import { v4 as uuidv4 } from 'uuid';
-
-// async function createNewOrder(orderBody) {
-//   try {
-//     const orderId = uuidv4();
-
-//     const newOrder = await Order.create({
-//       id: orderId,
-//       payment: orderBody.payment,
-//       delivery: orderBody.delivery,
-//       comments: orderBody.comments,
-//       status: 'created',
-//       total: orderBody.total,
-//       userId: orderBody.userId,
-//       cartId: orderBody.cartId,
-//     });
-
-//     await Promise.all(orderBody.items.map(async (itemId) => {
-//       await CartItem.update({ orderId: orderId }, { where: { id: itemId } });
-//     }));
-
-//     return newOrder;
-
-//   } catch (error) {
-//     throw error;
-//   }
-// }
-
-// export { createNewOrder };
-
-import { CartItem, Order } from '../MonogoDB/connecton';
-import { v4 as uuidv4 } from 'uuid';
+import mongoose from 'mongoose';
+import { Order } from '../schemas/relations';
 
 async function createNewOrder(orderBody) {
   try {
-    const orderId = uuidv4();
-
     const newOrder = await Order.create({
-      _id: orderId,
+      _id: new mongoose.Types.ObjectId(),
       payment: orderBody.payment,
       delivery: orderBody.delivery,
       comments: orderBody.comments,
@@ -45,11 +12,10 @@ async function createNewOrder(orderBody) {
       total: orderBody.total,
       userId: orderBody.userId,
       cartId: orderBody.cartId,
+      cartItems: orderBody.cartItems,
     });
 
-    await Promise.all(orderBody.items.map(async (itemId) => {
-      await CartItem.updateOne({ _id: itemId }, { orderId: orderId });
-    }));
+    await Order.create(newOrder);
 
     return newOrder;
 
