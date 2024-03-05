@@ -9,19 +9,6 @@ let cartRouter = express.Router();
 cartRouter.get('/profile/cart', async (req: Request, res: Response) => {
   try {
     const userId = req.header('x-user-id');
-    console.log(userId);
-    const foundCart = await getSingleCart(userId);
-    res.status(200).json(foundCart);
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({ error: 'Internal Server Error' })
-  }
-});
-
-cartRouter.get('/profile/cart/:userId', async (req: Request, res: Response) => {
-  try {
-    const userId = req.params.userId;
-    console.log(userId);
     const foundCart = await getSingleCart(userId);
     res.status(200).json(foundCart);
   } catch (error) {

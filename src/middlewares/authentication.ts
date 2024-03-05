@@ -19,7 +19,7 @@ export async function verifyToken (req: AuthenticatedRequest, res: Response, nex
   }
 
   try {
-    const user = jwt.verify(token, process.env.TOKEN_KEY!);
+    const user = jwt.verify(token, process.env.TOKEN_KEY);
 
     req.user = user;
   } catch (err) {

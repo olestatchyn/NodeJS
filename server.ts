@@ -6,7 +6,7 @@ import { userRouter } from './src/controllers/user.controller';
 import { logger } from './src/middlewares/logger';
 import { userIdValidation } from './src/middlewares/userIdValidation';
 import { connectToDb } from './src/MonogoDB/connecton';
-import { verifyToken } from './src/middlewares/verification';
+import { verifyToken } from './src/middlewares/authentication';
 import seeding from './src/seeding/seeding';
 
 const app = express();

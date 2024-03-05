@@ -1,4 +1,4 @@
-import { createUser, getUserByEmail, getUserPassword } from "../repositories/user.repository";
+import { createUser, getUserByEmail } from "../repositories/user.repository";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
@@ -17,9 +17,10 @@ async function registerUser(userInfo) {
 async function loginUser(userInfo) {
   const emailReceived =  userInfo.email;
   const passwordReceived =  userInfo.password;
+  const user = await getUserByEmail(emailReceived);
 
-  if(await getUserByEmail(emailReceived)) {
-    const storedPassword = await getUserPassword(emailReceived);
+  if(user) {
+    const storedPassword = user.password;
     const passwordMatch = await bcrypt.compare(passwordReceived, storedPassword);
 
     if(passwordMatch){

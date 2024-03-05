@@ -17,15 +17,6 @@ async function getUserByEmail(userEmail) {
   }
 }
 
-async function getUserPassword(userEmail) {
-  try {
-    const user = await User.findOne({ email: userEmail });
-    return user.password;
-  } catch (error) {
-    throw new Error(`Error getting user password: ${error.message}`);
-  }
-}
-
 async function createUser(newUser) {
   try {
     return await User.create({
@@ -39,4 +30,4 @@ async function createUser(newUser) {
   }
 }
 
-export { getUserById, getUserByEmail, createUser, getUserPassword };
+export { getUserById, getUserByEmail, createUser };
