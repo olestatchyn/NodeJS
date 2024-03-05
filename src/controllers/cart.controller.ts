@@ -2,12 +2,26 @@ import express, { Request, Response } from 'express';
 import { getSingleCart, editCart, deleteCart } from '../services/cart.service';
 import { createOrder } from '../services/order.service'
 import { orderEntitySchema, cartPutEntitySchema } from '../validation/validation'
+import { isAdmin } from '../middlewares/isAdmin';
 
 let cartRouter = express.Router();
+
+cartRouter.get('/profile/cart', async (req: Request, res: Response) => {
+  try {
+    const userId = req.header('x-user-id');
+    console.log(userId);
+    const foundCart = await getSingleCart(userId);
+    res.status(200).json(foundCart);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ error: 'Internal Server Error' })
+  }
+});
 
 cartRouter.get('/profile/cart/:userId', async (req: Request, res: Response) => {
   try {
     const userId = req.params.userId;
+    console.log(userId);
     const foundCart = await getSingleCart(userId);
     res.status(200).json(foundCart);
   } catch (error) {
@@ -34,7 +48,7 @@ cartRouter.put('/profile/cart', async (req: Request, res: Response) => {
   }
 });
 
-cartRouter.delete('/profile/cart', async (req: Request, res: Response) => {
+cartRouter.delete('/profile/cart', isAdmin, async (req: Request, res: Response) => {
   try {
     const userId = req.header('x-user-id');
     await deleteCart(userId);

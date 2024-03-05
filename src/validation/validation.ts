@@ -24,9 +24,9 @@ const cartPutEntitySchema = Joi.object({
   })).required(),
 });
 
-const userRegisterEntitySchema = Joi.object({
+const userRegisterLoginEntitySchema = Joi.object({
   email: Joi.string().required(),
   password: Joi.string().required(),
 });
 
-export { cartPutEntitySchema, orderEntitySchema, userRegisterEntitySchema }
+export { cartPutEntitySchema, orderEntitySchema, userRegisterLoginEntitySchema }

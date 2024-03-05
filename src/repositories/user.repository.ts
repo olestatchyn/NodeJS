@@ -13,7 +13,16 @@ async function getUserByEmail(userEmail) {
   try {
     return await User.findOne({ email: userEmail });
   } catch (error) {
-    throw new Error(`Error getting user by ID: ${error.message}`);
+    throw new Error(`Error getting user by email: ${error.message}`);
+  }
+}
+
+async function getUserPassword(userEmail) {
+  try {
+    const user = await User.findOne({ email: userEmail });
+    return user.password;
+  } catch (error) {
+    throw new Error(`Error getting user password: ${error.message}`);
   }
 }
 
@@ -30,4 +39,4 @@ async function createUser(newUser) {
   }
 }
 
-export { getUserById, getUserByEmail, createUser };
+export { getUserById, getUserByEmail, createUser, getUserPassword };

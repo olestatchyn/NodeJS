@@ -6,13 +6,19 @@ import { userRouter } from './src/controllers/user.controller';
 import { logger } from './src/middlewares/logger';
 import { userIdValidation } from './src/middlewares/userIdValidation';
 import { connectToDb } from './src/MonogoDB/connecton';
-import dotenv from "dotenv";
+import { verifyToken } from './src/middlewares/verification';
 import seeding from './src/seeding/seeding';
-
-dotenv.config();
 
 const app = express();
 const port = process.env.PORT;
+
+app.use((req, res, next) => {
+  if (req.path !== '/api/login' && req.path !== '/api/register') {
+    verifyToken(req, res, next);
+  } else {
+    next();
+  }
+});
 
 app.use(bodyParser.json());
 app.use(userIdValidation, logger);

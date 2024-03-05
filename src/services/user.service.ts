@@ -1,14 +1,36 @@
-import { createUser, getUserByEmail } from "../repositories/user.repository";
+import { createUser, getUserByEmail, getUserPassword } from "../repositories/user.repository";
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+
 
 async function registerUser(userInfo) {
   if(await getUserByEmail(userInfo.email)) {
     return null;
   }
+  const saltRounds = 10;
+  const hashedPassword = await bcrypt.hash(userInfo.password, saltRounds);
+  userInfo.password = hashedPassword;
+
   return await createUser(userInfo);
 }
 
-// async function loginUser(productId:string) {
-//   return await getUser(productId);
-// }
+async function loginUser(userInfo) {
+  const emailReceived =  userInfo.email;
+  const passwordReceived =  userInfo.password;
 
-export{ registerUser };
+  if(await getUserByEmail(emailReceived)) {
+    const storedPassword = await getUserPassword(emailReceived);
+    const passwordMatch = await bcrypt.compare(passwordReceived, storedPassword);
+
+    if(passwordMatch){
+      const token = jwt.sign({ email: emailReceived }, process.env.TOKEN_KEY, { expiresIn: '2h' });
+      return token;
+    } else {
+      return null;
+    }
+  } else {
+    return null;
+  }
+}
+
+export{ registerUser, loginUser };
