@@ -3,8 +3,8 @@ import { User, Product, CartItem, Cart, Order } from '../schemas/relations';
 
 export default async function seeding() {
   try {
-    const user1 = await User.create({ _id: new mongoose.Types.ObjectId('000000000000000000000009') });
-    const user2 = await User.create({ _id: new mongoose.Types.ObjectId('000000000000000000000099') });
+    const user1 = await User.create({ _id: new mongoose.Types.ObjectId('000000000000000000000009'), email: 'admin@example.com', password: 'adminpassword', role: 'admin'});
+    const user2 = await User.create({ _id: new mongoose.Types.ObjectId('000000000000000000000099'), email: 'user@example.com', password: 'userpassword', role: 'simple user'});
 
     const product1 = await Product.create({
       _id: new mongoose.Types.ObjectId('000000000000000000000001'),

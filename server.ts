@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { productRouter } from './src/controllers/product.controller';
 import { cartRouter } from './src/controllers/cart.controller';
+import { userRouter } from './src/controllers/user.controller';
 import { logger } from './src/middlewares/logger';
 import { userIdValidation } from './src/middlewares/userIdValidation';
 import { connectToDb } from './src/MonogoDB/connecton';
@@ -15,7 +16,7 @@ const port = process.env.PORT;
 
 app.use(bodyParser.json());
 app.use(userIdValidation, logger);
-app.use('/api', productRouter, cartRouter);
+app.use('/api', productRouter, cartRouter, userRouter);
 
 app.listen(port, async () => {
   await connectToDb();
