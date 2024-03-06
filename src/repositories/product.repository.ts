@@ -1,19 +1,15 @@
+import { EntityNotFound } from '../errors/entity-not-found.error';
+import { ErrorMessage } from '../errors/error-consts';
 import { Product } from '../schemas/relations';
 
 async function getAllProducts() {
-  try {
-    return await Product.find();
-  } catch (error) {
-    throw new Error(`Error getting all products: ${error.message}`);
-  }
+  const products = await Product.find();
+  return products;
 }
 
 async function getProductById(productId) {
-  try {
-    return await Product.findOne({ _id: productId });
-  } catch (error) {
-    throw new Error(`Error getting product by ID: ${error.message}`);
-  }
+  const product = await Product.findOne({ _id: productId });
+  return product;
 }
 
 export { getAllProducts, getProductById };

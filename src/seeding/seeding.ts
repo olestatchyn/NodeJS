@@ -64,6 +64,6 @@ export default async function seeding() {
 
     console.log('Records created successfully');
   } catch (error) {
-    throw new Error(`Error creating cart: ${error.message}`);
+    throw new Error(`Error during seeding: ${error.message}`);
   }
 }

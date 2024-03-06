@@ -8,9 +8,12 @@ import { userIdValidation } from './src/middlewares/userIdValidation';
 import { connectToDb } from './src/MonogoDB/connecton';
 import { verifyToken } from './src/middlewares/authentication';
 import seeding from './src/seeding/seeding';
+import { errorHandlerMiddleware } from './src/middlewares/error.middleware';
 
 const app = express();
 const port = process.env.PORT;
+
+app.use(errorHandlerMiddleware);
 
 app.use((req, res, next) => {
   if (req.path !== '/api/login' && req.path !== '/api/register') {

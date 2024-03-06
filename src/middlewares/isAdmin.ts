@@ -1,12 +1,14 @@
 import { Request, Response, NextFunction } from 'express';
-import { getUserById } from '../repositories/user.repository';
+import { getUser } from '../services/user.service';
+import Forbidden from '../errors/forbidden.error';
+import { ErrorMessage } from '../errors/error-consts';
 
 export async function isAdmin(req: Request, res: Response, next:NextFunction) {
   const userId = req.header('x-user-id');
-  const user = await getUserById(userId);
+  const user = await getUser(userId);
   
   if (user.role !== 'admin') {
-    return res.status(401).send('Only admins can do that');
+    throw new Forbidden(ErrorMessage.notAdmin);
   }
   next();
 }

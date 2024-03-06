@@ -1,33 +1,25 @@
 import mongoose from 'mongoose';
 import { User } from '../schemas/relations';
+import { EntityNotFound } from '../errors/entity-not-found.error';
+import { ErrorMessage } from '../errors/error-consts';
 
 async function getUserById(userId) {
-  try {
-    return await User.findOne({ _id: userId });
-  } catch (error) {
-    throw new Error(`Error getting user by ID: ${error.message}`);
-  }
+  const user = await User.findOne({ _id: userId });
+  return user;
 }
 
 async function getUserByEmail(userEmail) {
-  try {
-    return await User.findOne({ email: userEmail });
-  } catch (error) {
-    throw new Error(`Error getting user by email: ${error.message}`);
-  }
+  const user = await User.findOne({ email: userEmail })
+  return user;
 }
 
 async function createUser(newUser) {
-  try {
-    return await User.create({
-      _id: new mongoose.Types.ObjectId(),
-      email: newUser.email,
-      password: newUser.password,
-      role: 'simple user'
-    });
-  } catch (error) {
-    throw new Error(`Error creating user: ${error.message}`);
-  }
+  return await User.create({
+    _id: new mongoose.Types.ObjectId(),
+    email: newUser.email,
+    password: newUser.password,
+    role: 'simple user'
+  });
 }
 
 export { getUserById, getUserByEmail, createUser };
