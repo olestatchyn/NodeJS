@@ -1,6 +1,6 @@
 import { EntityNotFound } from '../errors/entity-not-found.error';
 import { ErrorMessage } from '../errors/error-consts';
-import { Product } from '../schemas/relations';
+import { Product } from '../schemas/relations.schema';
 
 async function getAllProducts() {
   const products = await Product.find();

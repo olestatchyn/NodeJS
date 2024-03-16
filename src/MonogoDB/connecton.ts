@@ -13,4 +13,8 @@ const connectToDb = async () => {
   } 
 }
 
-export { connectToDb }
+const dbStatus = () => {
+  return mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected';
+};
+
+export { connectToDb, dbStatus }

@@ -2,7 +2,7 @@ import express, { NextFunction, Request, Response } from 'express';
 import { getSingleCart, editCart, deleteCart } from '../services/cart.service';
 import { createOrder } from '../services/order.service'
 import { orderEntitySchema, cartPutEntitySchema } from '../validation/validation'
-import { isAdmin } from '../middlewares/isAdmin';
+import { isAdmin } from '../middlewares/isAdmin.middleware';
 import BadRequestError from '../errors/bad-request.error';
 import { ErrorMessage } from '../errors/error-consts';
 
@@ -14,7 +14,7 @@ cartRouter.get('/profile/cart', async (req: Request, res: Response, next: NextFu
     const foundCart = await getSingleCart(userId);
     res.status(200).json(foundCart);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     next(error);
   }
 });
@@ -32,7 +32,7 @@ cartRouter.put('/profile/cart', async (req: Request, res: Response, next: NextFu
     const editedCart = await editCart(cartId, cartItems);
     res.status(200).json(editedCart);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     next(error);
   }
 });
@@ -43,7 +43,7 @@ cartRouter.delete('/profile/cart', isAdmin, async (req: Request, res: Response, 
     await deleteCart(userId);
     res.status(204).send('Cart successfully deleted');
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     next(error);
   }
 });
@@ -60,7 +60,7 @@ cartRouter.post('/profile/cart/checkout', async (req: Request, res: Response, ne
 
     res.status(201).json(createdOrder);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     next(error);
   }
 });

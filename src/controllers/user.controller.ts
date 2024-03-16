@@ -19,7 +19,7 @@ userRouter.post('/register', async (req: Request, res: Response, next: NextFunct
 
     res.status(201).json(newUser);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     next(error);
   }
 });
@@ -37,7 +37,7 @@ userRouter.post('/login', async (req: Request, res: Response, next: NextFunction
 
     res.status(201).json(token);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     next(error);
   }
 });

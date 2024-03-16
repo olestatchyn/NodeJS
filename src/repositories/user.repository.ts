@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { User } from '../schemas/relations';
+import { User } from '../schemas/relations.schema';
 import { EntityNotFound } from '../errors/entity-not-found.error';
 import { ErrorMessage } from '../errors/error-consts';
 

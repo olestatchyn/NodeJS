@@ -1,6 +1,6 @@
 import { EntityNotFound } from '../errors/entity-not-found.error';
 import { ErrorMessage } from '../errors/error-consts';
-import { Cart, CartItem } from '../schemas/relations';
+import { Cart, CartItem } from '../schemas/relations.schema';
 
 async function getCartById(userId) {
   const cart = await Cart.findOne({ userId: userId, isDeleted: false }).populate({

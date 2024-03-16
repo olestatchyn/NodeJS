@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import { User, Product, CartItem, Cart, Order } from '../schemas/relations';
+import { User, Product, CartItem, Cart, Order } from '../schemas/relations.schema';
 
-export default async function seeding() {
+async function seedDatabase() {
   try {
     const user1 = await User.create({ _id: new mongoose.Types.ObjectId('000000000000000000000009'), email: 'admin@example.com', password: 'adminpassword', role: 'admin'});
     const user2 = await User.create({ _id: new mongoose.Types.ObjectId('000000000000000000000099'), email: 'user@example.com', password: 'userpassword', role: 'simple user'});
@@ -62,8 +62,23 @@ export default async function seeding() {
       cartItems: [cartItem1._id],
     });
 
-    console.log('Records created successfully');
   } catch (error) {
     throw new Error(`Error during seeding: ${error.message}`);
+  }
+}
+
+export default async function handleSeed() {
+  try {
+    const db = mongoose.connection.db;
+    const collections = await db.collections();
+    
+    if (collections.length === 0) {
+      seedDatabase();
+      console.log('Database seeded successfully.');
+    } else {
+      console.log('Database not empty. Skipping seeding process.');
+    }
+  } catch (error) {
+    console.error('Error seeding database:', error);
   }
 }

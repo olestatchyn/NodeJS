@@ -10,7 +10,7 @@ productRouter.get('/products', async (req: Request, res: Response, next: NextFun
     const productList = await getProductList();
     res.status(200).json(productList);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     next(error);
   }
 });
@@ -24,7 +24,7 @@ productRouter.get('/products/:productId', async (req: Request, res: Response, ne
     }
     res.status(200).json(foundProduct);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     next(error);
   }
 });

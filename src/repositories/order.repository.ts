@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { Order } from '../schemas/relations';
+import { Order } from '../schemas/relations.schema';
 
 async function createNewOrder(orderBody) {
   const newOrder = await Order.create({
